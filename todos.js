@@ -3,7 +3,16 @@ var todoList = {
 
   // Display
   displayTodos: function() {
-    console.log('My Todos:', this.todos)
+    console.log('My Todos:');
+
+    if (this.todos.length === 0) {
+      console.log('You don\'t have any todos');
+    } else {
+      for(var i = 0; i < this.todos.length; i++) {
+        console.log(this.todos[i].completed ? '(x)' : '( )');
+        console.log(this.todos[i].todoText);
+      }
+    }
   },
 
   // Add todo
@@ -32,6 +41,26 @@ var todoList = {
     var todo = this.todos[index];
     todo.completed = !todo.completed;
     this.displayTodos();
+  },
+
+  // Toggle all
+  toggleAll: function() {
+    
+    var totalTodos = this.todos.length;
+    var completedTodos = 0;
+
+    // Get number of completed todos
+    for (var i = 0; i < totalTodos; i++) {
+      if (this.todos[i].completed) {
+        completedTodos++;
+      }
+    }
+    // If all are true, toggle all to false
+    if (totalTodos === completedTodos) {
+      for (var i = 0; i < totalTodos; i++) {
+        this.todos[i].completed === false;
+      }
+    }
   }
 };
 
