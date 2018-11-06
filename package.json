@@ -1,0 +1,19 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "todos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xanderbakx/todo-list.git"
+  },
+  "author": "Xander Bakx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xanderbakx/todo-list/issues"
+  },
+  "homepage": "https://github.com/xanderbakx/todo-list#readme"
+}

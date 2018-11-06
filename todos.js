@@ -11,7 +11,7 @@ var todoList = {
 
   // Change todo
   changeTodo: function(index, todoText) {
-    this.todos[index].todoText = todoText; 
+    this.todos[index].todoText = todoText;
   },
 
   // Delete todo
@@ -37,10 +37,12 @@ var todoList = {
     }
     // If all are true, toggle all to false
     if (totalTodos === completedTodos) {
+      // eslint-disable-next-line no-redeclare
       for (var i = 0; i < totalTodos; i++) {
         this.todos[i].completed = false;
       }
     } else {
+      // eslint-disable-next-line no-redeclare
       for (var i = 0; i < totalTodos; i++) {
         this.todos[i].completed = true;
       }
@@ -57,21 +59,26 @@ var handlers = {
     view.displayTodos();
   },
   changeTodo: function() {
-    var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
+    var changeTodoPositionInput = document.getElementById(
+      'changeTodoPositionInput'
+    );
     var changeTodoTextInput = document.getElementById('changeTodoTextInput');
-    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
+    todoList.changeTodo(
+      changeTodoPositionInput.valueAsNumber,
+      changeTodoTextInput.value
+    );
     changeTodoPositionInput.value = '';
     changeTodoTextInput.value = '';
     view.displayTodos();
   },
-  deleteTodo: function() {
-    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-    deleteTodoPositionInput.value = '';
+  deleteTodo: function(index) {
+    todoList.deleteTodo(index);
     view.displayTodos();
   },
   toggleCompleted: function() {
-    var toggleTodoPositionInput = document.getElementById('toggleTodoPositionInput');
+    var toggleTodoPositionInput = document.getElementById(
+      'toggleTodoPositionInput'
+    );
     todoList.toggleCompleted(toggleTodoPositionInput.valueAsNumber);
     toggleTodoPositionInput.value = '';
     view.displayTodos();
@@ -110,11 +117,20 @@ var view = {
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
     return deleteButton;
+  },
+  setUpEventListeners: function() {
+    var todosUl = document.querySelector('ul');
+
+    todosUl.addEventListener('click', function(event) {
+      // Get the element that was clicked
+      var elementClicked = event.target;
+
+      // Check if element is a delete button
+      if (elementClicked.className === 'deleteButton') {
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
   }
 };
 
-var todosUl = document.querySelector('ul');
-
-todosUl.addEventListener('click', function(event) {
-  console.log(event.target.parentNode.id);
-});
+view.setUpEventListeners();
