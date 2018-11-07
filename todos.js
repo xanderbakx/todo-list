@@ -29,24 +29,23 @@ var todoList = {
   toggleAll: function() {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
+
     // Get number of completed todos
-    for (var i = 0; i < totalTodos; i++) {
-      if (this.todos[i].completed) {
+    this.todos.forEach(function(todo) {
+      if (todo.completed) {
         completedTodos++;
       }
-    }
-    // If all are true, toggle all to false
-    if (totalTodos === completedTodos) {
-      // eslint-disable-next-line no-redeclare
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = false;
+    });
+
+    this.todos.forEach(function(todo) {
+      // If all are true, toggle all to false
+      if (totalTodos === completedTodos) {
+        todo.completed = false;
+        // Else, make everything true
+      } else {
+        todo.completed = true;
       }
-    } else {
-      // eslint-disable-next-line no-redeclare
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    });
   }
 };
 
@@ -94,23 +93,23 @@ var view = {
   displayTodos: function() {
     var todosUl = document.querySelector('ul');
     todosUl.innerHTML = '';
-    for (var i = 0; i < todoList.todos.length; i++) {
-      var todoLi = document.createElement('li');
-      var todo = todoList.todos[i];
-      var todoTextWithCompletion = '';
 
+    todoList.todos.forEach(function(todo, index) {
+      var todoLi = document.createElement('li');
+      var todoTextWithCompletion = '';
       // Check whether completed or not
       if (todo.completed) {
         todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
         todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-      todoLi.id = i;
+
+      todoLi.id = index;
       // DOM manipulation to display todos
       todoLi.textContent = todoTextWithCompletion;
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-    }
+    }, this);
   },
   createDeleteButton: function() {
     var deleteButton = document.createElement('button');
